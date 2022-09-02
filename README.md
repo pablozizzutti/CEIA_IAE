@@ -16,15 +16,15 @@ Docentes
 
 ### Descripcion
 
-Se desarrollo un loopback entre script de python y la placa Nucleo F746ZG.
+Se desarrolló un loopback entre script de python y la placa Nucleo F746ZG.
 
 
 ### Caracteristicas tecnicas utilizadas
 
-Hardware: Nucleo F746ZG
+* Hardware: Nucleo F746ZG
 
-Nombre del SO : Ubuntu 20.04.5 LTS
-Tipo de OS: 64 bits
+* Nombre del SO : Ubuntu 20.04.5 LTS
+* Tipo de OS: 64 bits
 
-Python -> Visual Studio Code 
-C++ -> Mbed Compiler Online
+* Python -> Visual Studio Code 
+* C++ -> Mbed Compiler Online
