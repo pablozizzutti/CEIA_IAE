@@ -1,6 +1,4 @@
-# Actividad LoopBack
-
-## Inteligencia Artificial Embebida
+# Inteligencia Artificial Embebida
 
 ## 4ta Cohorte 2021
 
