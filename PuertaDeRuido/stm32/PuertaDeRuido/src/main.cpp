@@ -9,8 +9,8 @@
 #define BUFF_LEN    2
 #define MSG_LEN     3
 
-#define UMBRAL_APERTURA 3500
-#define UMBRAL_CIERRE 300
+#define UMBRAL_APERTURA 2500
+#define UMBRAL_CIERRE 200
 #define HOLD 0.3
 #define SAMPLERATE 22050
 
