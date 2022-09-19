@@ -25,7 +25,7 @@ Se desarrolló un loopback entre script de python y la placa Nucleo F746ZG.
 * Tipo de OS: 64 bits
 
 * Python -> Visual Studio Code 
-* C++ -> Visual Studio Code 
+* C -> Visual Studio Code 
 
 ## Actividad : Puerta de Ruido
 
