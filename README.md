@@ -34,3 +34,7 @@ Se desarrolló un loopback entre script de python y la placa Nucleo F746ZG.
     * Umbral de cierre: Es el valor que debe alcanzarse para volver a cerrarse
     * “hold”: Es el tiempo que permanece abierta la compuerta una vez alcanzado el umbral de cierre (si durante este periodo la señal quedara entre ambos umbrales, la compuerta permanecera abierta).
 * Implementar la compuerta de ruido en C como embebido en el lazo.
+
+## Actividad : Clasificador
+
+* Realizar un clasificador en el sistema embebido que detecte las clases segun los parametros (Bite, Chew, Chew-Bite).
