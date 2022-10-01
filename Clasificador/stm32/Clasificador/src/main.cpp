@@ -26,44 +26,20 @@ char                message[MSG_LEN] = { 0 };
 // The following variable is protected by locking the mutex
 char                data[DATA_LEN] = { 0 };
 
-unsigned int amplitudMaxima;
-unsigned int simetria;
-unsigned int desvio;
+unsigned short depth;
+unsigned short amplitudMaxima;
+unsigned short simetria;
+unsigned short desvio;
 char                clase[1] = { 0 };
 
 
-void clasificador()
-{
-    mutex.lock();
 
-    while (1) {
-        // Wait for a condition to change
-        cond.wait();
- 
-        // Now it is safe to access data in this thread 
-        amplitudMaxima = (data[6]-48)*10 + (data[7]-48);
-        simetria = (data[9]-48)*10 + (data[10]-48);
-        desvio = (data[12]-48)*10 + (data[13]-48);
- 
-        //printf("amplitudMaxima  %u\n", (unsigned int)amplitudMaxima);  
-        //printf("simetria  %u\n", (unsigned int)simetria);  
-        //printf("desvio  %u\n", (unsigned int)desvio);  
 
-        //serial.write(amplitudMaxima, sizeof(amplitudMaxima));
- 
-        /*
-        |--- Maximo <= 37
-        |   |--- Maximo <= 19
-        |   |   |--- class: 1
-        |   |--- Maximo >  19
-        |   |   |--- class: 1
-        |--- Maximo >  37
-        |   |--- Simetria <= 50
-        |   |   |--- class: 0
-        |   |--- Simetria >  50
-        |   |   |--- class: 2
-        */
+char clasificador(unsigned short depth, unsigned short amplitudMaxima, unsigned short simetria, unsigned short desvio){
+         
+   switch (depth){
 
+   case 2:
         if (amplitudMaxima <= 37){
             if (amplitudMaxima <= 19){
                 clase[0] = '1';
@@ -80,9 +56,46 @@ void clasificador()
                 clase[0] = '2';    
             }
         }
+    break;
+   case 3:       
+    break;   
+   case 4:       
+    break;  
+   case 5:       
+    break;
+   default:
+    clase[0] = 'E';
+   }
+
+   return clase[0];
+}
+
+
+void onSerialSend()
+{
+    mutex.lock();
+
+    while (1) {
+      
+        // Wait for a condition to change
+        cond.wait();
+ 
+        // Now it is safe to access data in this thread 
+        depth = (data[0]-48);
+        amplitudMaxima = (data[8]-48)*10 + (data[9]-48);
+        simetria = (data[11]-48)*10 + (data[12]-48);
+        desvio = (data[14]-48)*10 + (data[15]-48);
+ 
+        //printf("amplitudMaxima  %u\n", (unsigned int)amplitudMaxima);  
+        //printf("simetria  %u\n", (unsigned int)simetria);  
+        //printf("desvio  %u\n", (unsigned int)desvio);  
+        //serial.write(amplitudMaxima, sizeof(amplitudMaxima));
+
+        clase[0] = clasificador(depth, amplitudMaxima, simetria, desvio);
 
         serial.write(clase, sizeof(clase)); 
         memset(data, 0, DATA_LEN);  // empty data to make space for new data
+        memset(clase, ' ', sizeof(clase));  // empty data
     }
 }
 
@@ -141,7 +154,7 @@ int main()
     ); 
 
     // declaracion de los threads
-    thread1.start(clasificador);
+    thread1.start(onSerialSend);
     thread2.start(callback(&eventQueue, &EventQueue::dispatch_forever));
     serial.sigio(callback(onSigio));
 
