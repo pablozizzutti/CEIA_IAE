@@ -62,15 +62,15 @@ char clasificador(unsigned short depth, unsigned short duracion,
             if (amplitudMaxima <= 19){
                 clase[0] = '1';
             }
-            if (amplitudMaxima > 19){
+            else {
                 clase[0] = '1';    
             }
         }
-        if (amplitudMaxima > 37){
+        else {
             if (simetria <= 50){
                 clase[0] = '0';
             }
-            if (simetria > 50){
+            else {
                 clase[0] = '2';    
             }
         }
@@ -104,24 +104,24 @@ char clasificador(unsigned short depth, unsigned short duracion,
             if (amplitudMaxima <= 19){                
                 clase[0] = '1';
             }
-            if (amplitudMaxima > 19){
+            else {
                 clase[0] = '1';    
             }
         }
-        if (amplitudMaxima > 37){
+        else {
             if (simetria <= 50){
                 if (crucesPorCero <= 45){                
                     clase[0] = '0';
                 }
-                if (crucesPorCero > 45){
+                else {
                     clase[0] = '2';    
                 }
             }
-            if (simetria > 50){
+            else {
                 if (simetria <= 84){                
                     clase[0] = '2';
                 }
-                if (simetria > 84){
+                else {
                     clase[0] = '0';    
                 }                  
             }
@@ -182,71 +182,71 @@ char clasificador(unsigned short depth, unsigned short duracion,
                     if (desvio <= 1){                                
                         clase[0] = '1';    
                     }
-                    if (desvio > 1){
+                    else {
                         clase[0] = '0';        
                     }     
                 }
-                if (amplitudMaxima > 4){
+                else {
                     if (simetria <= 25){                                
                         clase[0] = '1';    
                     }
-                    if (simetria > 25){
+                    else {
                         clase[0] = '1';        
                     }  
                 }   
             }
-            if (amplitudMaxima > 19){
+            else {
                 if (simetria <= 41){    
                     if (duracion <= 24){                                
                         clase[0] = '1';    
                     }
-                    if (duracion > 24){
+                    else {
                         clase[0] = '1';        
                     }     
                 }
-                if (simetria > 41){
+                else {
                     if (desvio <= 3){                                
                         clase[0] = '1';    
                     }
-                    if (desvio > 3){
+                    else {
                         clase[0] = '1';        
                     }  
                 }  
             }
         }
-        if (amplitudMaxima > 37){
+        else {
             if (simetria <= 50){                
                 if (crucesPorCero <= 45){    
                     if (amplitudMaxima <= 42){                                
                         clase[0] = '1';    
                     }
-                    if (amplitudMaxima > 42){
+                    else {
                         clase[0] = '0';        
                     }     
                 }
-                if (crucesPorCero > 45){
+                else {
                     if (desvio <= 8){                                
                         clase[0] = '2';    
                     }
-                    if (desvio > 8){
+                    else {
                         clase[0] = '0';        
                     }  
                 }   
             }
-            if (simetria > 50){
+            else {
                 if (simetria <= 84){    
                     if (amplitudMaxima <= 46){                                
                         clase[0] = '2';    
                     }
-                    if (amplitudMaxima > 46){
+                    else {
                         clase[0] = '2';        
                     }     
                 }
-                if (simetria > 84){
+                else {
                     if (amplitudMaxima <= 60){                                
                         clase[0] = '1';    
                     }
-                    if (amplitudMaxima > 60){
+                    else {
                         clase[0] = '0';        
                     }  
                 }  
@@ -281,15 +281,15 @@ void onSerialSend()
         // Ahora es seguro acceder a los datos del thread
         // Los datos se envian con el siguiente formato:
         //
-        // sd,dd,cc,aa,ss,dd#
+        // sd,dd,ccc,aaa,sds,ddd#
         //
         // s: caracter de start
         // d: valor del depth (profundidad del modelo)
-        // dd: duracion (s)
-        // cc: Cruces por cero
-        // aa: Amplitud máxima
-        // ss: Simetria
-        // dd: Desvio
+        // ddd: duracion (s)
+        // ccc: Cruces por cero
+        // aaa: Amplitud máxima
+        // sss: Simetria
+        // ddd: Desvio
         // #: caracter de fin de dato
         // ,: caracter separador
         // 
@@ -303,14 +303,14 @@ void onSerialSend()
         // 
         // Valor transmitido al embebido:
         //
-        // s2,34,70,39,57,04#
+        // s2,034,070,039,057,004#
 
         depth = (data[0]-48);
-        duracion = (data[2]-48)*10 + (data[3]-48);
-        crucesPorCero = (data[5]-48)*10 + (data[6]-48);
-        amplitudMaxima = (data[8]-48)*10 + (data[9]-48);
-        simetria = (data[11]-48)*10 + (data[12]-48);
-        desvio = (data[14]-48)*10 + (data[15]-48);
+        duracion = (data[2]-48)*100 + (data[3]-48)*10 + (data[4]-48);
+        crucesPorCero = (data[6]-48)*100 + (data[7]-48)*10 + (data[8]-48);
+        amplitudMaxima = (data[10]-48)*100 + (data[11]-48)*10 + (data[12]-48);
+        simetria = (data[14]-48)*100 + (data[15]-48)*10 + (data[16]-48);
+        desvio = (data[18]-48)*100 + (data[19]-48)*10 + (data[20]-48);
  
         // segun los datos de entrada realiza la clasificacion
         clase[0] = clasificador(depth, duracion, crucesPorCero, amplitudMaxima, simetria, desvio);
