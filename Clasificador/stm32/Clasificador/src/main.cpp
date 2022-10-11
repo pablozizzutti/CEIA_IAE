@@ -46,20 +46,20 @@ char clasificador(unsigned short depth, unsigned short duracion,
          
     switch (depth){
     /*
-    |--- Maximo <= 37
-    |   |--- Maximo <= 19
+    |--- Maximo <= 0.38
+    |   |--- Maximo <= 0.31
     |   |   |--- class: 1
-    |   |--- Maximo >  19
+    |   |--- Maximo >  0.31
     |   |   |--- class: 1
-    |--- Maximo >  37
-    |   |--- Simetria <= 50
+    |--- Maximo >  0.38
+    |   |--- Simetria <= 0.50
     |   |   |--- class: 0
-    |   |--- Simetria >  50
+    |   |--- Simetria >  0.50
     |   |   |--- class: 2
     */
     case 2:
-        if (amplitudMaxima <= 37){
-            if (amplitudMaxima <= 19){
+        if (amplitudMaxima <= 38){
+            if (amplitudMaxima <= 31){
                 clase[0] = '1';
             }
             else {
